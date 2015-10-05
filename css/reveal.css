@@ -1173,3 +1173,9 @@ body {
 
 .zoomed .reveal .roll span:after {
   visibility: hidden; }
+
+.apiimg {
+  height: 150px;
+  text-align: center;
+  position: relative;
+}
