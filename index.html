@@ -64,7 +64,7 @@
 						<h1 style="text-transform:none;">Your idea!</h1>
 					</section>
 					<section>
-						<h2 style="text-transform:none">1. Encorporate existing technologies in a unique way</h2>
+						<h2 style="text-transform:none">1. Incorporate existing technologies in a unique way</h2>
 					</section>
 					<section>
 						<h2 style="text-transform:none;">2. Limit your scope.</h1>
@@ -252,8 +252,8 @@
 							<img style="position:absolute; left:0; top:0; border:0; right:0; bottom:0; margin:auto; box-shadow:none; background:none;" align="center" width:500px; height:500px class="fragment fade-out" data-fragment-index="1" data-src="http://www.shiva-engine.com/legacy/wiki/images/archive/a/aa/20100523235954!Unity_logo.png"/>
 						</div>
 						<div style="padding:40px;" class="col-lg-6">
-							<h3 align="center" class="fragment" data-fragment-index="1" style="text-transform:none; position:relative;">Oculus Rift</h3>
-							<img style="position:absolute; left:0; top:0; border:0; right:0; bottom:0; margin:auto; box-shadow:none; background:none;" align="center" width:400px; height:400px class="fragment fade-out" data-fragment-index="1" data-src="http://i.imgur.com/yjzrKao.png"/>
+							<h3 align="center" class="fragment" data-fragment-index="1" style="text-transform:none; position:relative;">Git</h3>
+							<img style="position:absolute; left:0; top:0; border:0; right:0; bottom:0; margin:auto; box-shadow:none; background:none;" align="center" width:400px; height:400px class="fragment fade-out" data-fragment-index="1" data-src="https://git-scm.com/images/logos/downloads/Git-Icon-1788C.png"/>
 						</div>
 					</div>
 					</section>
@@ -437,11 +437,216 @@ function testTheEndpoint() {
 							<h2 style="text-transform:none;">What do we need?</h2>
 						<ul>
 							<li>A server to hold the compliments</li>
-							<li>A responsive front-end page for the user to go to</li>
+							<li>A front-end page for the user to go to</li>
 							<li>An endpoint from the front-end to the back-end that sends a compliment</li>
 						</ul>
-							<h3 style="text-transform:none;">I choose to use Node.js for the back-end and raw HTML/CSS/Javascript for the front-end</h3>
+							<p style="text-transform:none;">I chose to use Node.js for the back-end and raw HTML/CSS/Javascript for the front-end</p>
 					</section>
+
+					<section>
+						<h2 style="text-transform:none; font-size:60px">This is what it's going to look like.</h2>
+						<img style="border:0; box-shadow:none; background:none;" data-src="http://i.imgur.com/Vp0VMOT.png"/>
+					</section>
+
+					<section>
+						<h3 style="text-transform:none;">Lets start with the frontend.</h3> 
+						<h3 style="text-transform:none;">What the user is going to see.</h3>
+						<ul>
+							<li>A basic HTML page with a button</li>
+							<li>Some styling for the page to make it look nice</li>
+							<li>Javascript that gets a compliment from the server and changes the HTML to display it.</li>
+						</ul>
+					</section>
+					
+					<section>
+					<h2 style="text-transform:none;">The HTML</h2>
+
+					<pre><code data-trim contenteditable>
+<div class="title">Quick Compliments!</div>
+<div class="compliment"><span id="quote">Compliment goes here</span></div>
+<div class="container" onclick="changeQuote()"><span>Get a compliment!</span></div>
+					</code></pre>
+					</section>
+
+					<section>
+					<h2 style="text-transform:none;">The CSS</h2>
+
+					<pre><code data-trim contenteditable>
+html, body {
+	font-family: 'Open Sans';
+	height: 100%;
+	margin: 0;
+	position: relative;
+	background-color: #3498db;
+}
+.container:hover {
+	background-color:#bbb;
+	cursor:pointer;
+	border-radius:30px;
+}
+
+.container {
+	position: absolute;
+  	background-color: white;
+  	border-radius: 30px;
+  	box-shadow: 0px 3px 40px rgba(0, 0, 0, 0.2);
+  	max-width: 400px;
+  	text-align: center;
+  	height: 125px;
+  	font-size: 30px;
+  	line-height: 125px;
+  	font-weight: 100;
+  	color: #444;
+  	margin: 50px auto;
+  	bottom: 0;
+  	left: 0;
+  	right: 0;
+
+}
+
+span {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;      
+}
+
+.title {
+	font-size: 80px;
+  	line-height: 1.5;
+  	font-weight: 100;
+  	text-align: center;
+  	margin:  auto;
+  	padding: 50px 0;
+  	color: white;
+}
+
+.compliment {
+	margin: auto;
+	max-width: 800px;
+	height: 300px;
+	font-size: 50px;
+  	line-height: 200px;
+  	font-weight: 100;
+  	text-center: center;
+  	color: #444;
+  	text-align: center;
+  	color: white;
+}
+
+.button {
+	bottom: 0;
+	width 100px;
+	height: 50px;
+}
+					</code></pre>
+					</section>
+
+					<section>
+					<h2 style="text-transform:none;">The Javascript</h2>
+
+					<pre><code data-trim contenteditable>
+function changeQuote()
+{
+	$.get('/getcompliment', {name: $("#quote").text()}, function(data)
+		{
+			obj = JSON.parse(data);
+			console.log(obj.stuff);
+			$("#quote").text(obj.stuff);
+		});
+}
+					</code></pre>
+					</section>
+
+					<section>
+						<h3 style="text-transform:none;">Cool! Lets do the backend.</h3>
+						<ul>
+							<li>A basic server that can accept connections on a specific port.</li>
+							<li>A list of compliments</li>
+							<li>A endpoint for our frontend to access (/getcompliment is what I named it)</li>
+						</ul>
+					</section>
+
+					<section>
+					<h2 style="text-transform:none;">The Base Server</h2>
+
+					<pre><code data-trim contenteditable>
+app.get('/', function (req, res) {
+  res.sendfile('index.html');
+});
+
+app.set('port', (process.env.PORT || 5000));
+
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
+});
+					</code></pre>
+					</section>
+
+					<section>
+					<h2 style="text-transform:none;">The list of compliments</h2>
+
+					<pre><code data-trim contenteditable>
+var compliments = ["Dude you rock!", 
+"You look pretty good today.", 
+"You don't look half bad!", 
+"On a scale of 1-10 for personality, you are a solid 9.5.", 
+"You are so cool bro!", 
+"Your hair is on point today.",
+"How are you so polite?",
+"I like your jacket.", 
+"Let's hang out and never stop hanging out.",
+"Teach me how to be as charming as you are!",
+"Your name is so fun to say",
+"Your feet are too perfect it's almost illegal.",
+"Can I have your socks? They look so hot on you",
+"You're a great gift giver.",
+"You're my poster child.",
+"Has anyone told you how perfect your right hand is?",
+"You are quite strapping M'Lady.",
+"Your IQ makes ints overflow.",
+"All my friends know how cool you are!",
+"Looking fly today I see.",
+"Wow fishing for compliments again?"];
+					</code></pre>
+					</section>
+
+					<section>
+					<h2 style="text-transform:none;">The \getcompliment endpoint</h2>
+
+					<pre><code data-trim contenteditable>
+app.get('/getcompliment', function (req, res) {
+  var obj = JSON.parse(JSON.stringify(req.query));
+  var temp = "";
+  while(true)
+  {
+  	temp = compliments[Math.floor(Math.random() * (compliments.length))]
+  	if (obj.name !== temp) {
+  		break;
+  	}
+  }
+  res.send('{"stuff": "' + temp +'"}');
+});
+					</code></pre>
+					</section>
+
+					<section>
+						<h3 style="text-transform:none;">The last step is deploying the app to a cloud service. I chose Heroku</h3>
+						<h3 style="text-transform:none;">And that's it! Check out the app here:</h3>
+						<a style="font-size: 80px;" href="https://quickcompliments.herokuapp.com/">Quick Compliments!</a>
+					</section>
+
+				</section>
+
+				<section>
+					<h2 style="text-transform:none;">Now I know that was a lot</h2>
+					<h2 style="text-transform:none;">But that's completely okay.</h2>
+				</section>
+
+				<section style="text-align: left;">
+					<h2 style="text-transform:none;">Thanks!</h2>
+					<h3 style="text-transform:none;">Presentation: vatyx.github.io/HackathonPresentation</h3>
+					<h3 style="text-transform:none;">Github: Vatyx</h3>
+					<h3 style="text-transform:none;">Contact: sahildhanju1@gmail.com</h3>
 				</section>
 
 			</div>
